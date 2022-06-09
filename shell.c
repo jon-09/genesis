@@ -22,7 +22,6 @@ int main(void)
 		if (cnt != EOF)
 		{
 			printf("%s\n", str);
-			cnt = getchar();
 		}
 	}
 	return (0);
