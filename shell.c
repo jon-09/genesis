@@ -17,7 +17,9 @@ int main(void)
 		fflush(stdin);
 		scanf("%s", str);
 		cnt = getchar();
-		while (cnt != EOF)
+/*		printf("%s\n", str);*/
+
+		if (cnt != EOF)
 		{
 			printf("%s\n", str);
 			cnt = getchar();
