@@ -1,28 +1,39 @@
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <math.h>
-#include <time.h>
-#include <stdio.h>
+#include "header.h"
 
 int main(void)
 {
-	char str[30];
-	int cnt;
+	char *liner, *line;
+	ssize_t bufsize = 0;
+	int zil, rd, i;
 
 	printf("Custom Terminal\n");
 	while (1)
 	{
-		printf("custom/user$$ ");
-		fflush(stdin);
-		scanf("%s", str);
-		cnt = getchar();
-/*		printf("%s\n", str);*/
-
-		if (cnt != EOF)
+		printf(">$ ");
+		/*fflush(stdin);*/
+		if (getline(&line, &bufsize, stdin) == -1)
 		{
-			printf("%s\n", str);
+			if(fflush(stdin))
+			{
+				if (i == 0)
+				{
+					i = read(0, line, 1);
+					liner = line;
+				}
+				if (--i < 0)
+				{
+					perror("END OF LINE");
+					exit(EXIT_SUCCESS);
+				}
+				else
+				{
+					perror("custom_shell: getline\n");
+					exit(EXIT_FAILURE);
+				}
+			
+			}
 		}
+	
 	}
-	return (0);
 }
+
