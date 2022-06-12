@@ -9,11 +9,11 @@ int main(int argc, char **argv)
 	do {
 		printf(">>> ");
 		line = lsh_read_line();
-/*		args = lsh_split_line(line);*/
-/*		status = lsh_execute(args);*/
+		args = lsh_split_line(line);
+		status = lsh_execute(args);
 
 		free(line);
-/*		free(args);*/
+		free(args);
 	}while (status);
 
 	return EXIT_SUCCESS;
@@ -37,3 +37,38 @@ char *lsh_read_line(void)
 	}
 	return (line);
 }
+
+char **lsh_split_line(char *line)
+{
+	int bufsize = 64, post = 0;
+	char *token;
+	char **tokens = malloc(sizeof(char) * (bufsize + 1));
+
+	if (tokens == NULL)
+		exit(EXIT_FAILURE);
+
+	token = strtok(line, " ");
+	while (token != NULL)
+	{
+		tokens[post] = token;
+		token = strtok(NULL, " ");
+		post++;
+	}
+	return (tokens);
+}
+
+int lsh_execute(char **args)                                                                     
+{                                                                                                
+        int i;                                                                                   
+                                                                                                 
+        if (args[0] == NULL)                                                                     
+                return (1);                                                                      
+                                                                                                 
+        for (i = 0; i < lsh_num_builtins(); i++)                                                 
+        {                                                                                        
+                if (strcmp(args[0], builtin_str[i]) == 0)                                        
+                        return (*builtin_func[i])(args);                                         
+                                                                                                 
+        }                                                                                        
+        return (lsh_launch(args));                                                               
+}                                                                       
